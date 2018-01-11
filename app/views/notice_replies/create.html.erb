@@ -1,0 +1,9 @@
+<tr>
+	<td class="col-md-6 col-xs-6"><%= @notice_reply.content %></td>
+	<td>
+	  <%= @notice_reply.user.present? ? @notice_reply.user.email : "n/a" %>, <%= time_ago_in_words(@notice_reply.created_at) %> ago
+	</td>
+	<td>
+	    <%= link_to icon('trash'), "/notice_replies/destroy/#{@notice_reply.id}", method: :delete, data: { confirm: 'Are you sure?' } if @notice_reply.user.email == current_user.email or @notice.user == current_user %>
+	</td>
+</tr>

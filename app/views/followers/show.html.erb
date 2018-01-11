@@ -1,0 +1,195 @@
+<center>
+<h1><a href="/followers/show">Your Map</a></h1>
+    <div align="right">
+    <input type="text" name="placeInfo" align="right" id="center" style=" margin-bottom: 5pt">
+    <button onclick="focusin()">검색</button>
+    <form action="/marker/new" method="get" style="float: right; margin-left:3px; margin-top: 1px;">
+        <input type="submit" value="+">
+    </form>
+    </div>
+  
+    <div>
+        <input type="hidden" name="user_id" value="<%= @user.id %>">
+        <button value="<%= @user.id %>" class="btn btn-default reply_submit" class="form-control" id="mapowner"></button>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    </div>
+    
+<!-- 
+<div style="margin-bottom:2em;">
+    <%#= image_tag "auth_blog_emblem_300.png", size: "200", style: "margin:2em 0"%>
+</div>
+
+<%# if user_signed_in? %>
+  <p><%#= link_to "로그아웃", destroy_user_session_path, method: :delete, data: {confirm: "Are you sure?" }, class: 'btn btn-default'%></p>
+<%# else %>
+  <p><%#= link_to "로그인", new_user_session_path, class: 'btn btn-default' %></p>
+<%# end %>
+ -->
+
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c4f1441ccd3807dda3940fc6fa1a4bc&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new daum.maps.LatLng(37.501252, 127.039615), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+ 
+
+// 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+var positions = [
+
+    <% @markers.each do |marker| %>
+            
+        <% if marker.user_id == @user.id %>
+            {
+                content: "<div class=\"boxx\" align=\"center\" style=\"width: 150px;\"><div style=\"max-width: 100px;\"><a href='https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=<%=marker.placeName%>' style=\"display: block; overflow: hidden; text-overflow: ellipsis;\"><%= marker.placeName %></a></div><div><img width='42' height='42' src='<%= marker.img %>'></div><div>", 
+                latlng: new daum.maps.LatLng(<%= marker.lat %>, <%= marker.lon %>)
+            },
+        <% end %>
+    <% end %>
+];
+
+
+for (var i = 0; i < positions.length; i ++) {
+    // 마커를 생성합니다
+    var marker = new daum.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng // 마커의 위치
+    });
+
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+    // 마커에 표시할 인포윈도우를 생성합니다 
+    var infowindow = new daum.maps.InfoWindow({
+        content: positions[i].content, // 인포윈도우에 표시할 내용
+        removable : iwRemoveable
+    });
+   
+
+    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+    //daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+}
+
+// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}
+
+function focusin(){
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new daum.maps.LatLng(37.501252, 127.039615), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };  
+
+    // // 지도를 생성합니다    
+    // var map = new daum.maps.Map(mapContainer, mapOption); 
+
+    // 장소 검색 객체를 생성합니다
+    var ps = new daum.maps.services.Places(); 
+
+    // 키워드로 장소를 검색합니다
+    ps.keywordSearch($('#center').val() , placesSearchCB); 
+
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function placesSearchCB (data, status, pagination) {
+        if (status === daum.maps.services.Status.OK) {
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+            // LatLngBounds 객체에 좌표를 추가합니다
+            var bounds = new daum.maps.LatLngBounds();
+
+            for (var i=0; i<data.length; i++) {
+                //displayMarker(data[i]);    
+                bounds.extend(new daum.maps.LatLng(data[i].y, data[i].x));
+            }       
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            map.setBounds(bounds);
+        } 
+    }
+}
+/* 아래와 같이도 할 수 있습니다 */
+/*
+for (var i = 0; i < positions.length; i ++) {
+    // 마커를 생성합니다
+    var marker = new daum.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng // 마커의 위치
+    });
+
+    // 마커에 표시할 인포윈도우를 생성합니다 
+    var infowindow = new daum.maps.InfoWindow({
+        content: positions[i].content // 인포윈도우에 표시할 내용
+    });
+
+    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    (function(marker, infowindow) {
+        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+        daum.maps.event.addListener(marker, 'mouseover', function() {
+            infowindow.open(map, marker);
+        });
+
+        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+        daum.maps.event.addListener(marker, 'mouseout', function() {
+            infowindow.close();
+        });
+    })(marker, infowindow);
+}
+*/
+
+
+$(function(){
+    //$("#mapowner").val("<%= @user.email %>");
+    <% if @val == "true" %>
+        $("#mapowner").text("<%= @user.email %>"+" 님을 좋아합니다.");
+    <% else %>
+        $("#mapowner").text("<%= @user.email %>"+" 님을 좋아하지 않습니다");
+    <% end %>
+    $('#mapowner').click(function(){
+        user_id = this.value;
+        $.ajax({
+            method: "POST",
+            dataType: 'html',
+            url: "/followers/like",
+            data: { user_id: user_id },
+            success: function(data){
+                if(data == "true")
+                    $("#mapowner").text("<%= @user.email %>"+" 님을 좋아합니다.");
+                else
+                    $("#mapowner").text("<%= @user.email %>"+" 님을 좋아하지 않습니다");
+           
+              //$("#ajax3").append("&nbsp;&nbsp;" + "<a data-confirm='현재는 이 글을 삭제하기 위해서는 새로 고침이 필요합니다 ㅠㅠ' rel='nofollow' data-method='get' href='/posts/" + post_id + "'>"+"<span class='glyphicon glyphicon-trash'>"+"</span>"+"</a>" + "<hr style='margin-top: 10px; margin-bottom: 10px;'>");
+            },
+            error: function(){
+              alert("무엇인가 잘못 되엇다 !!!")
+            }
+          });
+    });
+
+});
+
+
+
+
+
+
+
+</script>

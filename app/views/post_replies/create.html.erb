@@ -1,0 +1,9 @@
+<tr>
+	<td class="col-md-6 col-xs-6"><%= @post_reply.content %></td>
+	<td>
+	  <%= @post_reply.user.present? ? @post_reply.user.email : "n/a" %>, <%= time_ago_in_words(@post_reply.created_at) %> ago
+	</td>
+	<td>
+	    <%= link_to icon('trash'), "/post_replies/destroy/#{@post_reply.id}", method: :delete, data: { confirm: 'Are you sure?' } if @post_reply.user.email == current_user.email or @post.user == current_user %>
+	</td>
+</tr>

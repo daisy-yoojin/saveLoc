@@ -1,0 +1,48 @@
+<style>
+	table {
+		margin-top: 20px;
+    	width: 100%;
+    	border-top: 1px solid #444444;
+    	border-collapse: collapse;
+  	}
+  	th, td {
+    	border-bottom: 1px solid #444444;
+    	padding: 10px;
+    	text-align: center;
+  	}
+	.title{
+		text-align: center;
+		font-weight: bold;
+		font-color: black;
+
+	}
+	.email_col{width: 60%;}
+	.rank_col{width: 20%;}
+	.like_col{width: 20%;}
+	
+
+</style>
+<center>
+<h1 class="title">Like Ranking</h1>
+<div align="right">
+	<input type="text" name="seach_id">
+	<input type="submit" value="검색"><br>
+</div>
+<center>
+<table>
+	<tr >
+		<td class="rank_col"><div align="center" style="font-size: 20pt">Rank</div></td>
+		<td class="email_col"><div align="center" style="font-size: 20pt">ID</div></td>
+		<td class="like_col"><div align="center" style="font-size: 20pt">Likes</div></td>
+	</tr>
+	<% c=1%>
+	<% @list.each do |info| %>
+	<tr>
+		<td><%=c%>. </td>
+		<td><a href="http://localhost:3000/welcome/search2"><%= info.email %></a></td>
+		<td><%= info.count %></td>
+		<% c= c+1%>
+	</tr>
+	<% end %>
+</table>
+</center>

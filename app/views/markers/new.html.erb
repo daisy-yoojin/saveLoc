@@ -1,0 +1,14 @@
+<h2>New post</h2>
+<div class="row">
+  <div class='col-md-12'>
+    <p style='text-align:right;'>
+      created by <%= current_user.email %>, Current Time : <%= Time.now %>
+    </p>
+  </div>
+</div>
+<div>
+<%= render 'form' %>
+</div>
+
+<hr>
+<%= link_to 'Back', '/', class: "btn btn-default" %>

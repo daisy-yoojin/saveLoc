@@ -1,0 +1,22 @@
+<h2>Editing 공지사항</h2>
+<div class="row">
+  <div class='col-md-12'>
+    <p style='text-align:right;'>
+      created by <%= current_user.email %>, <%= time_ago_in_words(@notice.created_at) %> ago
+    </p>
+  </div>
+</div>
+<form action="/notices/update/<%= @notice.id %>" method="post">
+<%= render 'form' %>
+
+<hr>
+<%= link_to 'Show', "/notices/show/#{@notice.id}", class: 'btn btn-default' %>
+<%= link_to 'Back', posts_path, class: 'btn btn-default' %>
+
+<script>
+	$(function(){
+		$("#title").val("<%= @notice.title %>");
+		$("#content").val("<%= @notice.content %>");
+	});
+	
+</script>

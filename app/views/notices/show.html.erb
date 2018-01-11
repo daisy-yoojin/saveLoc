@@ -1,0 +1,93 @@
+<div class='post'>
+  <div class="title">
+    <h3>Title:
+    <%= @notice.title %></h3>
+  </div>
+
+  <div class="content">
+    <h4>Content</h4>
+    <%= simple_format @notice.content %>
+    <hr>
+    <h5>reply</h5>
+  </div>
+
+  <div class="reply_content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Content</th>
+          <th>Created by</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id ="ajax5">
+          <% @notice.notice_replies.each do |notice_reply| %>
+          <tr>
+            <td class="col-md-6 col-xs-6"><%= notice_reply.content %></td>
+            <td>
+              <%= notice_reply.user.present? ? notice_reply.user.email : "n/a" %>, <%= time_ago_in_words(notice_reply.created_at) %> ago
+            </td>
+            <td>
+                <%= link_to icon('trash'), "/notice_replies/destroy/#{notice_reply.id}", method: :delete, data: { confirm: 'Are you sure?' } if notice_reply.user.email == current_user.email or @notice.user == current_user %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="user">
+    <strong>Created by </strong>
+    <%= time_ago_in_words(@notice.created_at) %> ago
+  </div>
+</div>
+
+<hr>
+<%= link_to 'Edit', "/notices/edit/#{@notice.id}", class: 'btn btn-default' %>
+<%= link_to 'Back', posts_path, class: 'btn btn-default' %>
+
+<!-- -->
+<h2>New reply</h2>
+<div class="row">
+  <div class='col-md-12'>
+    <p style='text-align:right;'>
+      created by <%= current_user.email %>, Current Time : <%= Time.now %>
+    </p>
+  </div>
+</div>
+
+  <div class="form-group">  
+    <input type="text" name="notice_reply_content_val" id = "notice_reply_content_val" class="form-control"> 
+  </div>
+   <div class="form-group">
+    <button value="<%= @notice.id %>" class="btn btn-default notice_reply_submit" class="form-control">Submit</button>
+  </div>
+  
+  <!-- <input type="hidden" name="authenticity_token" id="authenticity_token" value="<%= form_authenticity_token %>">
+ -->
+<script>
+  $(function() {
+    $('.notice_reply_submit').click(function(){
+      notice_reply_content_val = $("#notice_reply_content_val").val();
+      //post_id = $("#post_id").val();
+      authenticity_token = $("#authenticity_token").val();
+      notice_id = this.value;
+      $.ajax({
+        method: "POST",
+        dataType: 'html',
+        url: "/notice_replies/create",
+        data: { notice_reply_content: notice_reply_content_val, notice_id: notice_id },
+        success: function(data){
+          $("#ajax5").append(data)
+          
+          $("#notice_reply_content_val").val("");
+          alert("리플이 작성 되었습니다.")
+        },
+        error: function(){
+          alert("리플이 작성 실패.")
+        }
+      });
+    });
+  });
+</script>
