@@ -5,7 +5,7 @@ class InfoController < ApplicationController
   end
   def update
   	@user = User.find(current_user.id)
-  	@mapopen = params[:state]
+  	@state = params[:state]
   	if @state == "true"
   		@user.state = true
   	else 

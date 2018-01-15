@@ -18,15 +18,16 @@ class MarkersController < ApplicationController
   	uploader = DispatchUploader.new(current_user)
     
     # uploader.store_dir = uploader.store_dir(current_user.id)
-  	uploader.store!(file)
-  	# uploader.retrieve_from_store! ( ' my_file.png ' )
+    uploader.store!(file)
+    # uploader.retrieve_from_store! ( ' my_file.png ' )
     
-  	Marker.create!(img: uploader.url, content: content, user_id: user_id, lon: lon, lat: lat, placeName: placeName, classification: classification)
+    Marker.create!(img: uploader.url, content: content, user_id: user_id, lon: lon, lat: lat, placeName: placeName, classification: classification)
 
-	flash[:notice] = "전송되었습니다."
+    flash[:notice] = "전송되었습니다."
 
     @Markers = Marker.all 
     redirect_to '/'
+
   end
 
 end

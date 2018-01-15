@@ -13,7 +13,6 @@ gem 'fog'
 gem 'devise'     # 회원가입 및 인증
 gem 'rolify'     # role 관리
 gem 'authority'  # 권한설정
-gem 'rails_db'
 # 페이지 뷰를 깔끔하게 보이도록 하기 위해서 아래의 두 젬을 추가로 설치한다.
 gem 'bootstrap-sass'
 gem 'simple_form'
@@ -61,6 +60,7 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  gem 'rails_db'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
