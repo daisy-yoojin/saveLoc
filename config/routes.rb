@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get 'markers/new'
   post 'markers/create'
+  get 'markers/showSpec/:id' => 'markers#showSpec'
 
   post 'post_replies/create'
   delete '/post_replies/destroy/:id' => 'post_replies#destroy'

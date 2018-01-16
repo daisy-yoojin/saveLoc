@@ -30,4 +30,9 @@ class MarkersController < ApplicationController
 
   end
 
+  def showSpec
+    @marker = Marker.find(params[:id])
+  end
+
+
 end

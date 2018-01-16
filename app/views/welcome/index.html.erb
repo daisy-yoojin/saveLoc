@@ -58,7 +58,7 @@ var positions = [
                                     "</div>"+
                                     "<div class=\"body\">"+
                                         "<div class=\"img\">"+
-                                            "<img width='73' height='70' src='<%= marker.img %>'>"+
+                                            "<img onclick=\"javascript:location.href='/markers/showSpec/<%= marker.id %>'\"width='73' height='70' src='<%= marker.img %>'>"+
                                         "</div>"+
                                         "<div class=\"desc\">"+
                                             "<div class=\"ellipsis\"><%=marker.content%></div>"+
