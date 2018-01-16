@@ -8,19 +8,15 @@
 	<table class="table">
 		<thead>
 
-			<h2>나를 좋아요 한 사람</h2>
+			<h2 style="text-align: center;">나를 좋아요 한 사람</h2>
 		</thead>
 		
 		<tr>
-			<td>
+			<td style="text-align: center;">
 				<% @followee.each do |follow| %>
-					<form action="/followers/search" method="post">
 					  <div class="form-group" style=" margin-top: 10pt">  
 					    <a href="/followers/search/<%= User.find(follow.follower).id %>"><%= User.find(follow.follower).email %></a>
 					  </div>
-					  
-					  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-					</form>
 				<% end %>
 				
 			</td>	
@@ -31,17 +27,14 @@
 <div class="like_section">
 	<table class ="table">
 		<thead>
-			<h2>내가 좋아요 한 사람</h2>
+			<h2 style="text-align: center;">내가 좋아요 한 사람</h2>
 		</thead>
 		<tr>
-			<td>
+			<td style="text-align: center;">
 				<% @follower.each do |follow| %>
-					<form action="/followers/search" method="post">
 					  <div class="form-group" style=" margin-top: 10pt">  
 					    <a href="/followers/search/<%= User.find(follow.user_id).id %>"><%= User.find(follow.user_id).email %></a>
-					  </div>					  
-					  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-					</form> 
+					  </div>					 			 
 				<% end %>
 			</td>
 		</tr>

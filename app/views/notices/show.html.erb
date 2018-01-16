@@ -44,8 +44,9 @@
 </div>
 
 <hr>
-<%= link_to 'Edit', "/notices/edit/#{@notice.id}", class: 'btn btn-default' %>
 <%= link_to 'Back', posts_path, class: 'btn btn-default' %>
+<%= link_to 'Edit', '/notices/edit/'+@notice.id.to_s, class: 'btn btn-default' if user_roles(current_user) == "Admin" %>
+<%= link_to 'Delete', '/notices/destroy/'+@notice.id.to_s, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' if user_roles(current_user) == "Admin" %>
 
 <!-- -->
 <h2>New reply</h2>

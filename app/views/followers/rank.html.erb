@@ -39,7 +39,9 @@
 	<% @list.each do |info| %>
 	<tr>
 		<td><%=c%>. </td>
-		<td><a href="http://localhost:3000/welcome/search2"><%= info.email %></a></td>
+		<td>
+			<a href="http://localhost:3000/followers/search/<%= User.find_by(email: info.email).id %>"><%= info.email %></a>
+		</td>
 		<td><%= info.count %></td>
 		<% c= c+1%>
 	</tr>

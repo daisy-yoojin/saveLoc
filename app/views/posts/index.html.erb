@@ -1,14 +1,9 @@
-<style>
-  th{text-align: center}
-</style>
-
 <h2>Listing posts</h2>
 <table class="table">
   <thead>
-      <th>No.</th>
+      <th style="text-align: center;">No.</th>
       <th>Title</th>
       <th>Created by</th>
-      <th>Actions</th>
     </tr>
  
   <tbody>
@@ -17,7 +12,7 @@
         <td style="color: red"  class="col-md-1 col-xs-1" align="center">
           공지사항
         </td>
-        <td class="col-md-6 col-xs-6"><%= notice.title %></td>
+        <td class="col-md-8 col-xs-6"><%= link_to notice.title, "/notices/show/#{notice.id}" %></td>
         <td>
           <% if notice.created_at %>
             <%= time_ago_in_words(notice.created_at) %> ago
@@ -25,13 +20,7 @@
             "n/a"
           <% end %>
         </td>
-        <td>
-          <%= link_to icon('eye-open'), "/notices/show/#{notice.id}" %>&nbsp;
-          <% if user_signed_in? %>
-            <%= link_to icon('edit'), "/notices/edit/#{notice.id}" if notice.user_id == current_user.id %>&nbsp;
-            <%= link_to icon('trash'), "/notices/destroy/#{notice.id}", method: :delete, data: { confirm: 'Are you sure?' } if notice.user_id == current_user.id or user_roles(current_user) == "Admin" %>
-          <% end %>
-        </td>
+
       </tr>
     <% end %>
     <% @posts.each do |post| %>
@@ -39,15 +28,8 @@
         <td class="col-md-1 col-xs-1" align="center">
           <%= post.id %>
         </td>
-        <td class="col-md-6 col-xs-6"><%= post.title %></td>
+        <td class="col-md-8 col-xs-6"><%= link_to post.title, post %></td>
         <td><%= post.user.present? ? post.user.email : "n/a" %>, <%= time_ago_in_words(post.created_at) %> ago</td>
-        <td>
-          <%= link_to icon('eye-open'), post %>&nbsp;
-          <% if user_signed_in? %>
-            <%= link_to icon('edit'), edit_post_path(post) if post.updatable_by? current_user %>&nbsp;
-            <%= link_to icon('trash'), post, method: :delete, data: { confirm: 'Are you sure?' } if post.deletable_by? current_user %>
-          <% end %>
-        </td>
       </tr>
     <% end %>
   </tbody>
@@ -55,9 +37,7 @@
 <div align="center">
   <%= paginate @posts %>
 </div>
-
-<br>
-<div align="right">
+<div align="right" style="margin-bottom: 50px;">
   <% if user_roles(current_user) == "Admin" %>
   <%= link_to '공지사항', '/notices/new', class: "btn btn-default" %>
   <% end %>  

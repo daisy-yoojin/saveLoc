@@ -48,11 +48,15 @@ class FollowersController < ApplicationController
   end
 
   def search
-    @user_email = params[:user_email]
-    @user_id = params[:user_id]
-    @markers = Marker.all
-    # @user = User.find_by(email: @user_email)
-    @user = User.find(@user_id)
+    if params[:user_email]
+      @user_email = params[:user_email]
+      @user = User.find_by(email: @user_email)
+    else
+      @user_id = params[:user_id]
+      @user = User.find(@user_id)
+    end
+    
+    @markers = Marker.where(user_id: @user.id)
     @like = Follower.find_by(user_id: @user.id, follower: current_user.id)
      
     if @like
