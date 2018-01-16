@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   get 'followers/search_user'
   get 'followers/search_follower'
   post 'followers/search'
+  # get 'followers/search/:user_email/'=> 'followers#search'
+  get 'followers/search/:user_id/'=> 'followers#search'
+
 
   get 'info/edit'
   post 'info/update'

@@ -15,7 +15,19 @@
  */
 
 
+/*#footer {
 
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:70px;   
+
+    background:#ccc;
+
+}*/
  h1{
  	color:black;
  	font-weight: bold;
@@ -24,3 +36,48 @@
  .boxx {
  	color:red;
  }
+html,
+
+body {
+
+    margin:0;
+
+    padding:0;
+
+    height:100%;
+
+}
+
+#wrapper {
+
+	position:relative;
+
+    min-height:100%;
+
+}
+
+#header {
+
+	height:70px;
+
+    background:#ccc;
+
+}
+
+#container {
+
+    padding:20px;
+
+}
+
+#footer {
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:70px;   
+
+}

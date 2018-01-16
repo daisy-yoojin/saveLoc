@@ -1,31 +1,51 @@
-<div>
-	<h2>나를 좋아요 한 사람</h2>
-	<% @followee.each do |follow| %>
-		<form action="/followers/search" method="post">
-		  <div class="form-group" style=" margin-top: 10pt">  
-		    <input type="text" name="user_email" id="user_email" class="form-control" value="<%= User.find(follow.follower).email %>"> 
-		  </div>
-		  <div class="form-group" align="left" style=" margin-top: 10pt">
-		    <input type="submit" class="btn btn-default" class="form-control" >
-		  </div>
-		  
-		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-		</form>
-	<% end %>
+<style type="text/css">
+	.like_area{float: none;content: '';}
+	.like_section{display: inline-block;width:48%; float: left;margin:0 1%;}
+</style>
+<div class="like_area">
+
+<div class="like_section">
+	<table class="table">
+		<thead>
+
+			<h2>나를 좋아요 한 사람</h2>
+		</thead>
+		
+		<tr>
+			<td>
+				<% @followee.each do |follow| %>
+					<form action="/followers/search" method="post">
+					  <div class="form-group" style=" margin-top: 10pt">  
+					    <a href="/followers/search/<%= User.find(follow.follower).id %>"><%= User.find(follow.follower).email %></a>
+					  </div>
+					  
+					  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+					</form>
+				<% end %>
+				
+			</td>	
+		</tr>
+	</table>
 </div>
 
-<div>
-	<h2>내가 좋아요 한 사람</h2>
-	<% @follower.each do |follow| %>
-		<form action="/followers/search" method="post">
-		  <div class="form-group" style=" margin-top: 10pt">  
-		    <input type="text" name="user_email" id="user_email" class="form-control" value="<%= User.find(follow.user_id).email %>"> 
-		  </div>
-		  <div class="form-group" align="left" style=" margin-top: 10pt">
-		    <input type="submit" class="btn btn-default" class="form-control" >
-		  </div>
-		  
-		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-		</form> 
-	<% end %>
+<div class="like_section">
+	<table class ="table">
+		<thead>
+			<h2>내가 좋아요 한 사람</h2>
+		</thead>
+		<tr>
+			<td>
+				<% @follower.each do |follow| %>
+					<form action="/followers/search" method="post">
+					  <div class="form-group" style=" margin-top: 10pt">  
+					    <a href="/followers/search/<%= User.find(follow.user_id).id %>"><%= User.find(follow.user_id).email %></a>
+					  </div>					  
+					  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+					</form> 
+				<% end %>
+			</td>
+		</tr>
+	</table>
+</div>
+
 </div>
