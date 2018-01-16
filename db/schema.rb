@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116070140) do
+ActiveRecord::Schema.define(version: 20180116111541) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "user_id"
@@ -103,6 +103,21 @@ ActiveRecord::Schema.define(version: 20180116070140) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
 
+  create_table "services", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "access_token"
+    t.string   "access_token_secret"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
+    t.text     "auth"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "services", ["user_id"], name: "index_services_on_user_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",   null: false
     t.string   "encrypted_password",     default: "",   null: false
@@ -117,10 +132,6 @@ ActiveRecord::Schema.define(version: 20180116070140) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.boolean  "state",                  default: true
-    t.string   "name"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
