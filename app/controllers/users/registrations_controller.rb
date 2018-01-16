@@ -17,13 +17,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super    
   # end
 
-  # # PUT /resource
+  # PUT /resource
   # def update
   #   super
   #   puts 'update start================================='
-  #   # user = User.find_by(eamil: params[:user][:email])
-  #   # user.secret = params[:user][:secret]
-  #   # user.save 
+  #   user = User.find_by(eamil: params[:user][:email])
+  #   user.secret = params[:user][:state]
+  #   user.save 
   #   binding.pry
   #   puts '--------------------------------------------------'
   # end

@@ -1,17 +1,15 @@
-<h2>개인정보 수정</h2>
+<h2>맵 공개 여부</h2>
+<br>
 <form action="/info/update" method="post">
-  <div class="form-group" style=" margin-top: 10pt">  
-    <input type="text" name="title" id="title" class="form-control"> 
-  </div>
 
   <div>
     <input type="radio" id="contactChoice1"
      name="state" value="true">
     <label for="contactChoice1">표시</label>
 
-    <input type="radio" id="contactChoice3"
+    <input type="radio" id="contactChoice2"
      name="state" value="false">
-    <label for="contactChoice3">숨기기</label>
+    <label for="contactChoice2">숨기기</label>
   </div>
 
   <div class="form-group" align="left" style=" margin-top: 10pt">
@@ -23,3 +21,12 @@
 
 <hr>
 <%= link_to 'Back', '/', class: 'btn btn-default' %>
+
+
+<script>
+  <% if current_user.state == true %>
+    $('#contactChoice1').prop("checked", true);
+  <% else %>
+    $('#contactChoice2').prop("checked", true);
+  <% end %>
+</script>

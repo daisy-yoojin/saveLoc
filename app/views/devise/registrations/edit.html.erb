@@ -21,10 +21,6 @@
   <div class="form-group">
     <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true, input_html: { class: 'form-control' } %>
   </div>
-  <div class="form-group">
-    <%= f.input :mapopen, hint: "기본값은 공개입니다.", required: true, as: :radio_buttons %>
-  </div>
-  <%= f.button :submit, "Update", class: 'btn btn-default' %>
 <% end %>
 
 <hr>

@@ -111,6 +111,7 @@ function placesSearchCB(data, status, pagination) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
 
+
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
@@ -342,7 +343,9 @@ function clickedListItem(marker,title,placePosition){
     document.getElementById("placeName").value = title;
 
     //지도 Focusing 이동
-    panTo(lat,lon)
+    map.setLevel(3);
+
+    panTo(lat,lon);
 
     var bounds = new daum.maps.LatLngBounds();
 
@@ -363,7 +366,8 @@ function panTo(lat,lon) {
     
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    map.panTo(moveLatLon);            
+    map.panTo(moveLatLon);
+    //map.setlevel(2);            
 }        
 
 </script>

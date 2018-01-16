@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
+# 페북 로그인
+gem 'omniauth-facebook'
+# 페이지 나눔
 gem 'kaminari'
+# 디버깅
 gem 'pry-rails'
+# 보안
 gem 'figaro'
 # 파일 업로드를 위한 잼
 gem 'carrierwave'
