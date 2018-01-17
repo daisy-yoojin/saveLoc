@@ -15,7 +15,6 @@ class MarkersController < ApplicationController
     placeName = params[:placeName]
     address = params[:address]
     classification = params[:classification]
-    binding.pry
 
   	uploader = DispatchUploader.new(current_user)
     

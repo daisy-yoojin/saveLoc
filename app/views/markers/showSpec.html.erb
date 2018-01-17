@@ -1,28 +1,43 @@
-<h2>Mark</h2>
-<div class="row">
-  <div class='col-md-12'>
-    <p style='text-align:right;'>
-      
-    </p>
-  </div>
+<h2>Show Mark</h2>
+<br>
+<div class="form-group">
+	<label class="control-label col-sm-1" for="address">장소명 : </label>
+	<!-- <div id="address" ></div> -->
+	<div class="col-sm-11">
+		<input type="text" name="address_hidden" id="address_disable"  class="form-control" disabled value="<%= @marker.placeName %>">
+	</div>	
 </div>
-<div class=\"img\">
-	<img  width='340' height='280' src='<%= @marker.img %>'>
+<div class="form-group">
+	<label class="control-label col-sm-1" for="address">내 용 : </label>
+	<!-- <div id="address" ></div> -->
+	<div class="col-sm-11">
+		<input type="text" name="address_hidden" id="address_disable"  class="form-control" disabled value="<%= @marker.content %>">
+	</div>	
 </div>
-<div>
-	<%= @marker.address %>	
+<div class="form-group">
+	<label class="control-label col-sm-1" for="address">주 소 : </label>
+	<!-- <div id="address" ></div> -->
+	<div class="col-sm-11">
+		<input type="text" name="address_hidden" id="address_disable"  class="form-control" disabled value="<%= @marker.address %>">
+	</div>	
 </div>
-<div>
-	<%= @marker.placeName %>	
+<div class="form-group">
+	<label class="control-label col-sm-1" for="address">분 류 : </label>
+	<!-- <div id="address" ></div> -->
+	<div class="col-sm-11">
+		<input type="text" name="address_hidden" id="address_disable"  class="form-control" disabled value="<%= @marker.classification %>">
+	</div>	
 </div>
-<div>
-	<%= @marker.content %>	
+<div class="form-group">
+	<label class="control-label col-sm-1" for="address">이미지 : </label>
+	<!-- <div id="address" ></div> -->
+	<div class="col-sm-11">
+		<img src="<%= @marker.img %>" class="img-responsive" alt="Responsive image" class="img-thumbnail">
+	</div>	
 </div>
-<div>
-	<%= @marker.classification %>	
-</div>
-
-<hr>
+<hr style="border: solid 1px gray;">
+<div style="margin-bottom: 50px;">
 <%= link_to 'Back', '/', class: 'btn btn-default' %>
 <%= link_to 'Edit', "/markers/edit/#{@marker.id}", class: 'btn btn-default' if @marker.user == current_user or user_roles(current_user) == "Admin" %>
 <%= link_to 'Delete', "/markers/destroy/#{@marker.id}", method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' if @marker.user == current_user or user_roles(current_user) == "Admin" %>
+</div>
