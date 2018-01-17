@@ -49,7 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       user = service.user
       service.update(
         expires_at: Time.at(auth.credentials.expires_at), # 새로 받아오면 만기기한도 업데이트 해주자
-        access_token: auth_credentials.token
+        access_token: auth.credentials.token
       )
     else
       user = User.create(
@@ -64,7 +64,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         access_token: auth.credentials.token
       )
     end
-    sign_in_and_redirect user, event: authentication
+    sign_in_and_redirect user, event: :authentication
     set_flash_message :notice, :success, kind: "Facebook"
   end
 
