@@ -37,7 +37,7 @@
 <div align="center">
   <%= paginate @posts %>
 </div>
-<div align="right" style="margin-bottom: 50px;">
+<div align="right" style="margin-bottom: 80px;">
   <% if user_roles(current_user) == "Admin" %>
   <%= link_to '공지사항', '/notices/new', class: "btn btn-default" %>
   <% end %>  

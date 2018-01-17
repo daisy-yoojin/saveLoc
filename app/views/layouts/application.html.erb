@@ -32,11 +32,11 @@
     </div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-		    <li><%= link_to "Pic", "/markers/new" %></li>
+		    <li><%= link_to "New", "/markers/new" %></li>
 		    <li><%= link_to "Posts", "/posts" %></li>
-		    <li><%= link_to "YouerMap", "/followers/show" %></li>
+		    <li><%= link_to "RandomMap", "/followers/show" %></li>
 		    <li><%= link_to "Ranking", "/followers/rank" %></li>
-		    <li><%= link_to "People", "/followers/search_follower" %></li>
+		    <li><%= link_to "Follow", "/followers/search_follower" %></li>
 		     
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
@@ -78,7 +78,7 @@
     	<%#<%= render partial: "shared/flash_messages", flash: flash %>
 		<%= yield %>
 	</div>
-	 <div id="footer"><%= render 'layouts/footer' %></div>
+	 <div id="footer" style="padding-top:20px"><%= render 'layouts/footer' %></div>
 	</div>
 </body>
 </html>

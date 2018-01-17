@@ -6,9 +6,7 @@
     </p>
   </div>
 </div>
-<div class=\"img\">
-	<img  width='340' height='280' src='<%= @marker.img %>'>
-</div>
+
 <div>
 	<style>
 	.radio_align{align-items: left}
@@ -26,6 +24,7 @@
 		$("#lat").val("<%= @marker.lat %>");
 		$("#id").val("<%= @marker.id %>");
 		$("#address").val("<%= @marker.address %>");
+		$("#address_hidden").val("<%= @marker.address %>");
 
 	});
 	
