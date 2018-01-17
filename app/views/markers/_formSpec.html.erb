@@ -1,0 +1,46 @@
+<style>
+	.radio_align{align-items: left}
+</style>
+<%=render 'searchMap'%>
+<form class="form-horizontal"action="/markers/create" method="post" enctype="multipart/form-data">
+	<div class="form-group" style=" margin-top: 10pt; text-align: left;">
+		<label class="control-label col-sm-1" forid="classification">분 류: </label>
+		<div class="col-sm-11">
+			<input type="radio" name="classification" id="classification" value="cafe" checked> Cafe 
+			<input type="radio" name="classification" id="classification" value="restaurant"> Food 
+			<input type="radio" name="classification" id="classification" value="etc"> ETC 
+		</div>
+	</div>
+	<div class="form-group" style=" margin-top: 10pt">  
+		<label class="control-label col-sm-1" for="image">이미지: </label>
+		<div class="col-sm-11">
+			<input  type="file" name="img" id="image" accept="image/*" class="form-control"> 
+		</div>
+	</div>
+	<div class="form-group">  
+		<label class="control-label col-sm-1" for="content">메 모: </label>
+		<div class="col-sm-11">
+			<input type="textarea" name="content" id="content" class="form-control" required> 
+		</div>
+	</div>
+	<div class="form-group">
+		<input type="hidden" name="lon" id="lon"  class="form-control" required>
+		<input type="hidden" name="lat" id="lat"  class="form-control" required>
+		<label class="control-label col-sm-1" for="placeName">장소명: </label>
+		<div class="col-sm-11">
+			<input type="text" name="placeName" id="placeName"  class="form-control" required>
+		</div>
+	</div>
+
+	<div class="form-group" align="left" style=" margin-top: 10pt">
+		<div class="control-label col-sm-1">
+		
+		</div>
+		<div class="col-sm-11 text-right" style="margin-bottom: 50px;">
+			<%= link_to 'Back', '/', class: "btn btn-default" %>
+			<input type="submit" class="btn btn-default" class="form-control" >
+		</div>
+	</div>
+	
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>

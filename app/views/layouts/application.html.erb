@@ -60,7 +60,7 @@
 		          		<li><%= link_to "Map 공개여부", '/info/edit' %></li>
 		          		<li><%= link_to "Roles : " + user_roles(current_user), '#' %></li>
 		          		<li><%= link_to "Sign out", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure?" } %></li>
-		          		<li><%= link_to "회원 탈퇴", 'info/destroy/', method: :delete, data: { confirm: "Are you sure?" } %></li>
+		          		<li><%= link_to "회원 탈퇴", "/info/destroy/#{current_user.id}", method: :delete, data: { confirm: "Are you sure?" } %></li>
 		        	</ul>
 		      	</li>
 		    <% else %>

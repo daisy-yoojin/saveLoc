@@ -11,27 +11,3 @@ admin_user = User.create( email: 'yun@hee.com', password: 'asdasd', state: true)
 admin_user.add_role :admin
 admin_user = User.create( email: 'yoo@jin.com', password: 'dbsgmlqkqh', state: true)
 admin_user.add_role :admin
-
-admin_user = User.create( email: 'aa@aa', password: 'asdasd', state: true )
-admin_user = User.create( email: 'bb@bb', password: 'asdasd', state: true )
-
-
-#임시 contents 
-
-
- Marker.create!(user_id: 1, img: 'https://s3.ap-northeast-2.amazonaws.com/stock-mulcam/uploads/1514642221.1515698hflvtuwn.png', lat: 33.450705 , lon: 126.570677,
- 	placeName:'카카오', classification:'장소', content:'제주도')
-
- Marker.create!(user_id: 1, img: 'https://s3.ap-northeast-2.amazonaws.com/stock-mulcam/uploads/1514642221.1515698hflvtuwn.png', lat: 33.450936, lon: 126.569477,
- 	placeName:'생태연못', classification:'장소', content:'제주도')
- 
- Marker.create!(user_id: 1, img: 'https://s3.ap-northeast-2.amazonaws.com/stock-mulcam/uploads/1514642221.1515698hflvtuwn.png', lat: 33.450879, lon: 126.569940,
- 	placeName:'텃밭', classification:'장소', content:'제주도')
- 
- Marker.create!(user_id: 1, img: 'https://s3.ap-northeast-2.amazonaws.com/stock-mulcam/uploads/1514642221.1515698hflvtuwn.png', lat: 33.451393, lon: 126.570738,
- 	placeName:'근린공원', classification:'장소', content:'제주도')
-
- 100.times do |i| 
- 	Post.create!(title: "aa" , content: "bb")
- end
- 

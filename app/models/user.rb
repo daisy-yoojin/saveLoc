@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   has_many :posts, dependent: :destroy
 
-  after_create :set_default_role, if: Proc.new { User.count > 1 }
+  after_create :set_default_role, if: Proc.new { User.count > 2 }
 
   private
 

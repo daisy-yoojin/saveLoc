@@ -1,5 +1,4 @@
 <h2>Mark</h2>
-<form action="/markers/editSpec/<%=@marker.id%>">
 <div class="row">
   <div class='col-md-12'>
     <p style='text-align:right;'>
@@ -10,9 +9,12 @@
 <div class=\"img\">
 	<img  width='340' height='280' src='<%= @marker.img %>'>
 </div>
+<div>
+	<%= @marker.address %>	
+</div>
 
 
 <hr>
 <%= link_to 'Back', '/', class: 'btn btn-default' %>
-<input class="btn btn-default" type="submit" value="Edit">
-</form>
+<%= link_to 'Edit', "/markers/edit/#{@marker.id}", class: 'btn btn-default' if @marker.user == current_user or user_roles(current_user) == "Admin" %>
+<%= link_to 'Delete', "/markers/destroy/#{@marker.id}", method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' if @marker.user == current_user or user_roles(current_user) == "Admin" %>

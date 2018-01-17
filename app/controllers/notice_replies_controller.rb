@@ -13,7 +13,7 @@ class NoticeRepliesController < ApplicationController
   end
 
   def destroy
-      @notice_id = @notice_reply.admin_id
+      @notice_id = @notice_reply.user_id
       @notice_reply.destroy
 
       flash[:notice] = "삭제 되었습니다."
@@ -23,7 +23,7 @@ class NoticeRepliesController < ApplicationController
 
     private
 	    # Use callbacks to share common setup or constraints between actions.
-    def set_reply
+    def set_notice_reply
       @notice_reply = NoticeReply.find(params[:id])
     end
 end

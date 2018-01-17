@@ -1,0 +1,32 @@
+<h2>Editing Mark </h2>
+<div class="row">
+  <div class='col-md-12'>
+    <p style='text-align:right;'>
+      
+    </p>
+  </div>
+</div>
+<div class=\"img\">
+	<img  width='340' height='280' src='<%= @marker.img %>'>
+</div>
+<div>
+	<style>
+	.radio_align{align-items: left}
+</style>
+<%=render 'searchMap'%>
+<form class="form-horizontal" action="/markers/update" method="post" enctype="multipart/form-data">
+	<%= render 'form' %>
+</div>
+
+<script>
+	$(function(){
+		$("#placeName").val("<%= @marker.placeName %>");
+		$("#content").val("<%= @marker.content %>");
+		$("#lon").val("<%= @marker.lon %>");
+		$("#lat").val("<%= @marker.lat %>");
+		$("#id").val("<%= @marker.id %>");
+		$("#address").val("<%= @marker.address %>");
+
+	});
+	
+</script>

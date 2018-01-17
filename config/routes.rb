@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   get 'markers/new'
   post 'markers/create'
   get 'markers/showSpec/:id' => 'markers#showSpec'
-  get 'markers/editSpec/:id' => 'markers#editSpec'
+  get 'markers/edit/:id' => 'markers#edit'
+  post 'markers/update'
+  delete '/markers/destroy/:id' => 'markers#destroy'
 
   post 'post_replies/create'
   delete '/post_replies/destroy/:id' => 'post_replies#destroy'
@@ -40,7 +42,7 @@ Rails.application.routes.draw do
 
   get 'info/edit'
   post 'info/update'
-  delete 'info/destory/:id' => 'info#destroy'
+  delete 'info/destroy/:id' => 'info#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

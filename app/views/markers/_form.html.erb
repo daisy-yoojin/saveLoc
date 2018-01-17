@@ -1,8 +1,4 @@
-<style>
-	.radio_align{align-items: left}
-</style>
-<%=render 'searchMap'%>
-<form class="form-horizontal"action="/markers/create" method="post" enctype="multipart/form-data">
+
 	<div class="form-group" style=" margin-top: 10pt; text-align: left;">
 		<label class="control-label col-sm-1" forid="classification">분 류: </label>
 		<div class="col-sm-11">
@@ -29,8 +25,17 @@
 		<label class="control-label col-sm-1" for="placeName">장소명: </label>
 		<div class="col-sm-11">
 			<input type="text" name="placeName" id="placeName"  class="form-control" required>
-		</div>
+		</div>		
 	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-1" for="address">주 소: </label>
+		<!-- <div id="address" ></div> -->
+		<div class="col-sm-11">
+			<input type="text" name="address_hidden" id="address_disable"  class="form-control" disabled>
+			<input type="hidden" name="address" id="address"  class="form-control">
+		</div>	
+	</div>
+
 
 	<div class="form-group" align="left" style=" margin-top: 10pt">
 		<div class="control-label col-sm-1">
@@ -43,4 +48,5 @@
 	</div>
 	
 	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="hidden" name="id" id="id">
 </form>

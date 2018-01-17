@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180116111541) do
     t.decimal  "lon"
     t.decimal  "lat"
     t.string   "placeName"
+    t.string   "address"
     t.string   "classification"
     t.text     "content"
     t.datetime "created_at",     null: false

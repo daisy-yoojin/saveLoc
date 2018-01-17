@@ -6,6 +6,7 @@ class CreateMarkers < ActiveRecord::Migration
       t.decimal :lon
       t.decimal :lat
       t.string :placeName
+      t.string :address
       t.string :classification
       t.text :content
 
