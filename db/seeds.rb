@@ -11,3 +11,14 @@ admin_user = User.create( email: 'yun@hee.com', password: 'asdasd', state: true)
 admin_user.add_role :admin
 admin_user = User.create( email: 'yoo@jin.com', password: 'dbsgmlqkqh', state: true)
 admin_user.add_role :admin
+admin_user = User.create( email: 'aa@aa.com', password: 'asdasd', state: true)
+admin_user = User.create( email: 'bb@bb.com', password: 'asdasd', state: true)
+admin_user = User.create( email: 'cc@cc.com', password: 'asdasd', state: true)
+admin_user = User.create( email: 'dd@dd.com', password: 'asdasd', state: true)
+admin_user = User.create( email: 'ee@ee.com', password: 'asdasd', state: true)
+
+100.times do |i|
+	title = i.to_s + "번째 글입니다."
+	content = i.to_s + "번째 내용입니다."
+	Post.create!(title: title, content: content, user_id: 1)
+end

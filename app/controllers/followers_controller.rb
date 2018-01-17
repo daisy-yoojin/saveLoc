@@ -34,13 +34,16 @@ class FollowersController < ApplicationController
   	@list = User.find_by_sql(['SELECT DISTINCT email, COUNT("followers".user_id) AS count
       FROM "users" INNER JOIN "followers" 
       ON "users".id = "followers".user_id
-      GROUP BY "followers".user_id'])    
+      GROUP BY "followers".user_id'])   
 	end
 
   def search_follower
-  	@followee = Follower.where(user_id: current_user.id) # 내가 좋아함
-  	@follower = Follower.where(follower: current_user.id) # 나를 좋아함
+  	@followee = Follower.where(user_id: current_user.id).page(params['page']).per(1) # 내가 좋아함
+  	@follower = Follower.where(follower: current_user.id).page(params['page']).per(4) # 나를 좋아함
   	
+  end
+  def method_name
+    
   end
 
   def search_user
