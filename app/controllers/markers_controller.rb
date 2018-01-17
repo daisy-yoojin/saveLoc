@@ -34,5 +34,9 @@ class MarkersController < ApplicationController
     @marker = Marker.find(params[:id])
   end
 
+  def editSpec
+    @marker = Marker.find(params[:id])
+  end
+
 
 end
