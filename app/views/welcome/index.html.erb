@@ -7,6 +7,15 @@
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
     .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info .link {color: #5085BB;}
+    #mapwrap{position:relative;overflow:hidden;}
+    .category, .category *{margin:0;padding:0;color:#000;}   
+    .category {position:absolute;overflow:hidden;top:10px;left:10px;width:200px;height:60px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
+    .category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
+    .category li{list-style:none;float:left;width:50px;height:59px;padding-top:5px;cursor:pointer;} 
+    .category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
+    .category .ico_coffee {background-position:-10px 0;}  
+    .category .ico_store {background-position:-10px -36px;}   
+    .category .ico_carpark {background-position:-10px -72px;} 
 </style>
 <center>
 <h1>Welcome to saveLoc</h1>
@@ -29,8 +38,33 @@
 <%# end %>
  -->
 
-<div id="map" style="width:100%;height:350px;"></div>
-
+<div id="map" style="width:100%;height:350px;">
+    <!-- 지도 위에 표시될 마커 카테고리 -->
+    <div class="category">
+        <ul>
+            <li id="cafeMenu" onclick="changeMarker('cafe')">
+                <!-- <span class="ico_comm ico_coffee"></span> -->
+                <img src="cafe.png" style="display:block;margin:0 auto 2px;width:32px;height:30px;">
+                커피숍
+            </li>
+            <li id="foodMenu" onclick="changeMarker('food')">
+                <img src="food.png" style="display:block;margin:0 auto 2px;width:32px;height:30px;">
+                <!-- <span class="ico_comm ico_store"></span> -->
+                음식점
+            </li>
+            <li id="etcMenu" onclick="changeMarker('etc')">
+                <img src="etc.png" style="display:block;margin:0 auto 2px;width:32px;height:30px;">
+                <!-- <span class="ico_comm ico_carpark"></span> -->
+                기타
+            </li>
+            <li id="allMenu" onclick="changeMarker('all')">
+                <img src="all.png" style="display:block;margin:0 auto 2px;width:32px;height:30px;">
+                <!-- <span class="ico_comm ico_carpark"></span> -->
+                전체
+            </li>
+        </ul>
+</div>
+</center>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c4f1441ccd3807dda3940fc6fa1a4bc&libraries=services"></script>
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -40,7 +74,9 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
- 
+var markerImageSrc_C = 'cafe.png';  //마커 이미지 입니다.
+var markerImageSrc_F = 'food.png';  //마커 이미지 입니다.
+var markerImageSrc_E = 'etc.png';   //마커 이미지 입니다.
 
 // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
 var positions = [
@@ -68,7 +104,9 @@ var positions = [
                             , 
 
 
-                    latlng: new daum.maps.LatLng(<%= marker.lat %>, <%= marker.lon %>)
+                    latlng: new daum.maps.LatLng(<%= marker.lat %>, <%= marker.lon %>),
+
+                    typee: "<%= marker.classification%>"
                 },
 
             <% end %>
@@ -76,13 +114,77 @@ var positions = [
     <%end%>
 ];
 
+cafeMarkers=[];
+foodMarkers=[];
+etcMarkers=[];
+
 
 for (var i = 0; i < positions.length; i ++) {
-    // 마커를 생성합니다
-    var marker = new daum.maps.Marker({
-        map: map, // 마커를 표시할 지도
-        position: positions[i].latlng // 마커의 위치
-    });
+    if (positions[i].typee == 'cafe'){
+        var imageSize = new daum.maps.Size(40, 44),
+            imageOptions = {  
+                spriteOrigin: new daum.maps.Point(0, 0),    
+                spriteSize: new daum.maps.Size(40, 40)  
+            };     
+        
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc_C, imageSize, imageOptions);    
+           // marker = createMarker(coffeePositions[i], markerImage);
+
+        // 마커를 생성합니다
+        var marker = new daum.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: positions[i].latlng ,// 마커의 위치
+            image: markerImage
+        });
+
+
+        cafeMarkers.push(marker);
+
+    }else if (positions[i].typee == 'restaurant'){
+        var imageSize = new daum.maps.Size(40, 44),
+            imageOptions = {  
+                spriteOrigin: new daum.maps.Point(0, 0),    
+                spriteSize: new daum.maps.Size(40, 40)  
+            };       
+        
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc_F, imageSize, imageOptions);    
+           // marker = createMarker(coffeePositions[i], markerImage);
+
+        // 마커를 생성합니다
+        var marker = new daum.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: positions[i].latlng ,// 마커의 위치
+            image: markerImage
+        });
+
+
+        foodMarkers.push(marker);
+
+       
+    }else if (positions[i].typee == 'etc'){
+        var imageSize = new daum.maps.Size(40, 44),
+            imageOptions = {  
+                spriteOrigin: new daum.maps.Point(0, 0),    
+                spriteSize: new daum.maps.Size(40, 40)  
+            };       
+        
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc_E, imageSize, imageOptions);    
+           // marker = createMarker(coffeePositions[i], markerImage);
+
+        // 마커를 생성합니다
+        var marker = new daum.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: positions[i].latlng ,// 마커의 위치
+            image: markerImage
+        });
+
+
+        etcMarkers.push(marker);
+   
+    };
 
     irremoveable = true; // removeable 속성을 true 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
     // 마커에 표시할 인포윈도우를 생성합니다 
@@ -90,13 +192,18 @@ for (var i = 0; i < positions.length; i ++) {
         content: positions[i].content, // 인포윈도우에 표시할 내용
         removable : irremoveable
     });
-   
 
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
     daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
-    //daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+}
+changeMarker('all');
+
+// 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
+function createMarkerImage(src, size, options) {
+    var markerImage = new daum.maps.MarkerImage(src, size, options);
+    return markerImage;            
 }
 
 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
@@ -148,35 +255,7 @@ function focusin(){
         } 
     }
 }
-/* 아래와 같이도 할 수 있습니다 */
-/*
-for (var i = 0; i < positions.length; i ++) {
-    // 마커를 생성합니다
-    var marker = new daum.maps.Marker({
-        map: map, // 마커를 표시할 지도
-        position: positions[i].latlng // 마커의 위치
-    });
 
-    // 마커에 표시할 인포윈도우를 생성합니다 
-    var infowindow = new daum.maps.InfoWindow({
-        content: positions[i].content // 인포윈도우에 표시할 내용
-    });
-
-    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
-    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-    (function(marker, infowindow) {
-        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
-        daum.maps.event.addListener(marker, 'mouseover', function() {
-            infowindow.open(map, marker);
-        });
-
-        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-        daum.maps.event.addListener(marker, 'mouseout', function() {
-            infowindow.close();
-        });
-    })(marker, infowindow);
-}
-*/
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 var overlay = new daum.maps.CustomOverlay({
@@ -194,4 +273,89 @@ daum.maps.event.addListener(marker, 'click', function() {
 function closeOverlay() {
     overlay.setMap(null);     
 }
+
+// 커피숍 마커들의 지도 표시 여부를 설정하는 함수입니다
+function setCafeMarkers(map) {        
+    for (var i = 0; i < cafeMarkers.length; i++) {  
+        cafeMarkers[i].setMap(map);
+    }        
+}
+// 음식점 마커들의 지도 표시 여부를 설정하는 함수입니다
+function setFoodMarkers(map) {        
+    for (var i = 0; i < foodMarkers.length; i++) {  
+        foodMarkers[i].setMap(map);
+    }        
+}
+// 커피숍 마커들의 지도 표시 여부를 설정하는 함수입니다
+function setEtcMarkers(map) {        
+    for (var i = 0; i < etcMarkers.length; i++) {  
+        etcMarkers[i].setMap(map);
+    }        
+}
+
+
+
+// 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
+function changeMarker(type){
+    
+    var cafeMenu = document.getElementById('cafeMenu');
+    var foodMenu = document.getElementById('foodMenu');
+    var etcMenu = document.getElementById('etcMenu');
+    var allMenu = document.getElementById('allMenu');
+    
+    // 커피숍 카테고리가 클릭됐을 때
+    if (type === 'cafe') {
+    
+        // 카페 카테고리를 선택된 스타일로 변경하고
+        cafeMenu.className = 'menu_selected';
+        // 음식점과 기타 카테고리는 선택되지 않은 스타일로 바꿉니다
+        foodMenu.className = '';
+        etcMenu.className = '';
+        allMenu.className = '';
+        
+        // 카페 마커들만 지도에 표시하도록 설정합니다
+        setCafeMarkers(map);
+        setFoodMarkers(null);
+        setEtcMarkers(null);
+        
+    } else if (type === 'food') { // 음식점 카테고리가 클릭됐을 때
+    
+        // 음식점 카테고리를 선택된 스타일로 변경하고
+        cafeMenu.className = '';
+        foodMenu.className = 'menu_selected';
+        etcMenu.className = '';
+        allMenu.className = '';
+        
+        // 음식점 마커들만 지도에 표시하도록 설정합니다
+        setCafeMarkers(null);
+        setFoodMarkers(map);
+        setEtcMarkers(null);
+        
+    } else if (type === 'etc') { // 기타 카테고리가 클릭됐을 때
+     
+        // 기타 카테고리를 선택된 스타일로 변경하고
+        cafeMenu.className = '';
+        foodMenu.className = '';
+        etcMenu.className = 'menu_selected';
+        allMenu.className = '';
+        
+        // 기타 마커들만 지도에 표시하도록 설정합니다
+        setCafeMarkers(null);
+        setFoodMarkers(null);
+        setEtcMarkers(map); 
+    }else if (type === 'all') { // 기타 카테고리가 클릭됐을 때
+     
+        // 기타 카테고리를 선택된 스타일로 변경하고
+        cafeMenu.className = '';
+        foodMenu.className = '';
+        etcMenu.className = '';
+        allMenu.className = 'menu_selected';
+        
+        // 기타 마커들만 지도에 표시하도록 설정합니다
+        setCafeMarkers(map);
+        setFoodMarkers(map);
+        setEtcMarkers(map);
+
+    };    
+} 
 </script>
