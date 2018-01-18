@@ -14,7 +14,10 @@
 	<!---->
 </head>
 <body>
-	<!--
+	
+	<!-- <div id="wrapper"> -->
+    <div id="header"></div>
+    <!--
 	<p class="notice"><%= notice %></p>
   	<p class="alert"><%= alert %></p>
 	-->
@@ -79,14 +82,12 @@
 	</div>
 	</div>
     </div>
-	<div id="wrapper">
-    <div id="header"></div>
     <div class="container">
     	<%#<%= render partial: "shared/flash_messages", flash: flash %>
 		<%= yield %>
 	</div>
 	
 	 <div id="footer" style="height: 0px;"><%= render 'layouts/footer' %></div>
-	</div>
+	<!-- </div> -->
 </body>
 </html>

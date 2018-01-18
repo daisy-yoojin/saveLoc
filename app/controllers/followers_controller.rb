@@ -51,7 +51,7 @@ class FollowersController < ApplicationController
       @array << key
 
     end
-    @per_number = 2
+    @per_number = 10
     @user = Kaminari.paginate_array(@array).page(params[:page]).per(@per_number)
 
     # @user = User.where(id: array).page(params[:page]).per(1)
@@ -68,13 +68,13 @@ class FollowersController < ApplicationController
 
 
   def search_follower
-  	@followee = Follower.where(user_id: current_user.id).page(params['page']).per(20) # 내가 좋아함
-  	@follower = Follower.where(follower: current_user.id).page(params['page']).per(20) # 나를 좋아함
+  	@followee = Follower.where(user_id: current_user.id).page(params['page']).per(5) # 내가 좋아함
+  	@follower = Follower.where(follower: current_user.id).page(params['page']).per(5) # 나를 좋아함
   	
   end
   def search_followee
-    @followee = Follower.where(user_id: current_user.id).page(params['page']).per(20) # 내가 좋아함
-    @follower = Follower.where(follower: current_user.id).page(params['page']).per(20) # 나를 좋아함
+    @followee = Follower.where(user_id: current_user.id).page(params['page']).per(5) # 내가 좋아함
+    @follower = Follower.where(follower: current_user.id).page(params['page']).per(5) # 나를 좋아함
     
   end
 
