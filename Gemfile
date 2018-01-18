@@ -11,7 +11,6 @@ gem 'figaro'
 # 파일 업로드를 위한 잼
 gem 'carrierwave'
 # aws s3 사용
-gem 'fog-aws'
 gem 'fog'
 
 # 회원인증 및 권한설정을 위한 젬
