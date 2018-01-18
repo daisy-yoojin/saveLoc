@@ -1,0 +1,22 @@
+
+<div class="like_area">
+	<div class="like_section">
+		<table class ="table">
+			<thead>
+				<h2 style="text-align: center;">내가 좋아요 한 사람</h2>
+			</thead>
+			<tr>
+				<td style="text-align: center;">
+					<% @follower.each do |follow| %>
+						  <div class="form-group" style=" margin-top: 10pt">  
+						    <a href="/followers/search/<%= User.find(follow.user_id).id %>"><%= User.find(follow.user_id).email %></a>
+						  </div>					 			 
+					<% end %>
+				</td>
+			</tr>
+		</table>
+		<div align="center">
+	  		<%= paginate @follower %>
+		</div>
+	</div>
+</div>

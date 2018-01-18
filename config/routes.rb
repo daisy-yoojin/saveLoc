@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get 'followers/rank'
   get 'followers/search_user'
   get 'followers/search_follower'
+  get 'followers/search_followee'
   post 'followers/search'
   # get 'followers/search/:user_email/'=> 'followers#search'
   get 'followers/search/:user_id/'=> 'followers#search'

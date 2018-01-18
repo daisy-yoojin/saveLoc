@@ -31,18 +31,50 @@ class FollowersController < ApplicationController
   end
 
   def rank
-  	@list = User.find_by_sql(['SELECT DISTINCT email, COUNT("followers".user_id) AS count
-      FROM "users" INNER JOIN "followers" 
-      ON "users".id = "followers".user_id
-      GROUP BY "followers".user_id'])   
-	end
+  	# @list = User.find_by_sql(['SELECT DISTINCT email, COUNT("followers".user_id) AS count
+   #    FROM "users" INNER JOIN "followers" 
+   #    ON "users".id = "followers".user_id
+   #    GROUP BY "followers".user_id'])
+   #  puts @list.inspect
+   #  @followee = Follower.where(user_id: current_user.id) # 내가 좋아함
+   #  puts @followee.inspect
+   #  puts @list.class
+   #  @list = User.find_by_sql(['SELECT DISTINCT email, COUNT("followers".user_id) AS count
+   #    FROM "users" INNER JOIN "followers" 
+   #    ON "users".id = "followers".user_id
+   #    GROUP BY "followers".user_id']).page(params['page']).per(4)
+    @list= Follower.group(:user_id).count
+    @sort = @list.sort_by {|_key, value| value}
+    @result = @sort.reverse.to_h 
+    @array = Array.new
+    @result.each do |key, value|
+      @array << key
+
+    end
+    @per_number = 2
+    @user = Kaminari.paginate_array(@array).page(params[:page]).per(@per_number)
+
+    # @user = User.where(id: array).page(params[:page]).per(1)
+    @page = params[:page].to_i
+    if @page and @page != 0
+      @num = 1+(@per_number*(@page-1))
+    else
+      @num = 1
+    end
+
+    #@list = Follower.joins(:users).select('email, COUNT("followers".user_id) AS count').distinct.group('followers".user_id').page(params['page']).per(1)
+	 
+  end
+
 
   def search_follower
-  	@followee = Follower.where(user_id: current_user.id).page(params['page']).per(1) # 내가 좋아함
-  	@follower = Follower.where(follower: current_user.id).page(params['page']).per(4) # 나를 좋아함
+  	@followee = Follower.where(user_id: current_user.id).page(params['page']).per(20) # 내가 좋아함
+  	@follower = Follower.where(follower: current_user.id).page(params['page']).per(20) # 나를 좋아함
   	
   end
-  def method_name
+  def search_followee
+    @followee = Follower.where(user_id: current_user.id).page(params['page']).per(20) # 내가 좋아함
+    @follower = Follower.where(follower: current_user.id).page(params['page']).per(20) # 나를 좋아함
     
   end
 
