@@ -17,7 +17,6 @@ class MarkersController < ApplicationController
     classification = params[:classification]
 
   	uploader = DispatchUploader.new(current_user)
-    binding.pry
     # uploader.store_dir = uploader.store_dir(current_user.id)
     uploader.store!(file)
     # uploader.retrieve_from_store! ( ' my_file.png ' )
